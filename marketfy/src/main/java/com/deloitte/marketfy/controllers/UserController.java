@@ -21,7 +21,7 @@ import com.deloitte.marketfy.repositories.UserRepository;
 @RequestMapping("/api")
 public class UserController {
 	
-	/////////////////////////////////---START SET UP---/////////////////////////////////
+	/////////////////////////////////---START 'SET UP'---/////////////////////////////////
 	
 	private UserRepository userRepository;
 	
@@ -29,7 +29,7 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 	
-	/////////////////////////////////---END SET UP---/////////////////////////////////
+	/////////////////////////////////---END 'SET UP'---/////////////////////////////////
 	
 	/////////////////////////////////---START 'GET' OPERATIONS---/////////////////////////////////
 	
@@ -52,7 +52,7 @@ public class UserController {
 	
 	/////////////////////////////////---END 'GET' OPERATIONS---/////////////////////////////////
 	
-	/////////////////////////////////---START POST OPERATIONS---/////////////////////////////////
+	/////////////////////////////////---START 'POST' OPERATIONS---/////////////////////////////////
 
 	@PostMapping("/users")
 	public ResponseEntity<String> saveUser(@RequestBody User user) {
@@ -69,9 +69,9 @@ public class UserController {
 		return result;
 	}
 
-	/////////////////////////////////---END POST OPERATIONS---/////////////////////////////////
+	/////////////////////////////////---END 'POST' OPERATIONS---/////////////////////////////////
 	
-	/////////////////////////////////---START PATCH OPERATIONS---/////////////////////////////////
+	/////////////////////////////////---START 'PATCH' OPERATIONS---/////////////////////////////////
 	
 	@PatchMapping("users/{userId}")
 	public ResponseEntity<String> updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
@@ -81,7 +81,6 @@ public class UserController {
 		boolean isNewEmailAvailable = getUserByEmail(newUser.getEmail()).isEmpty();
 		
 		if(userInDB.isEmpty()) {
-			
 			return new ResponseEntity<String>("USER WITH ID \""+userId+"\" NOT FOUND", HttpStatus.NOT_FOUND);
 		
 		} else if(!isNewEmailAvailable) {
@@ -112,9 +111,9 @@ public class UserController {
 		return result;
 	}
 	
-	/////////////////////////////////---END PATCH OPERATIONS---/////////////////////////////////
+	/////////////////////////////////---END 'PATCH' OPERATIONS---/////////////////////////////////
 	
-	/////////////////////////////////---START DELETE OPERATIONS---/////////////////////////////////
+	/////////////////////////////////---START 'DELETE' OPERATIONS---/////////////////////////////////
 
 	@DeleteMapping("/users/delete/{userId}")
 	public ResponseEntity<String> deleteUserById(@PathVariable("userId") int userId){
@@ -126,11 +125,9 @@ public class UserController {
 			result = new ResponseEntity<String>("USER WITH ID \""+userId+"\" DELETED", HttpStatus.OK);	
 		}
 		
-		return result;
-		
+		return result;		
 	}
 	
-	/////////////////////////////////---END DELETE OPERATIONS---/////////////////////////////////
-
+	/////////////////////////////////---END 'DELETE' OPERATIONS---/////////////////////////////////
 
 }
