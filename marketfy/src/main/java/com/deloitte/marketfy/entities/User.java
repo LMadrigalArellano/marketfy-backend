@@ -26,6 +26,9 @@ public class User {
 	@Column(name = "email", nullable = false, length = 200)
 	private String email;
 	
+	@Column(name = "password", nullable = false, length = 200)
+	private String password;
+	
 	@Column(name = "areas_of_interest", length = 300)
 	private String areasOfInterest;
 
@@ -67,6 +70,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getAreasOfInterest() {

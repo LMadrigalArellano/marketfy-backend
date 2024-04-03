@@ -99,6 +99,9 @@ public class UserController {
 				if(newUser.getEmail() != null) {
 					user.setEmail(newUser.getEmail());
 				}
+				if(newUser.getPassword() != null) {
+					user.setPassword(newUser.getPassword());
+				}
 				if(newUser.getAreasOfInterest() != null) {
 					user.setAreasOfInterest(newUser.getAreasOfInterest());	
 				}
