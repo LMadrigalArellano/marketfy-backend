@@ -20,8 +20,8 @@ public class Product {
 	@Column(name = "price", nullable = false)
 	private double price;
 	
-	@Lob
-	private byte[] image;
+	@Column(name = "image")
+	private String image;
 	
 	@Column(name = "description", length = 200)
 	private String description;
@@ -53,11 +53,11 @@ public class Product {
 		this.price = price;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
