@@ -1,9 +1,12 @@
 package com.deloitte.marketfy.controllers;
 
 import java.util.List;
-
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,9 +39,33 @@ public class ProductController {
 	/////////////////////////////////---END 'SET UP'---/////////////////////////////////
 	
 	/////////////////////////////////---START 'GET' OPERATIONS---/////////////////////////////////
+//	@GetMapping("/products")
+//	public List<Product> getAllProducts(){
+//		return productRepository.findAll();
+//	}
+//	
 	@GetMapping("/products")
-	public List<Product> getAllProducts(){
-		return productRepository.findAll();
+	public Page<Product> getPaginatedProducts(@RequestParam Map<String, String> queryParameters){
+		
+		String stringPageIndex = queryParameters.get("pageIndex");
+		String stringPageSize = queryParameters.get("pageSize");
+		String sortBy = queryParameters.get("sortBy");
+		
+		int pageIndex = 0;
+		int pageSize = 9;
+		
+		if(stringPageIndex != null) {
+			pageIndex = Integer.valueOf(stringPageIndex);
+		}
+		if(stringPageSize != null) {
+			pageSize = Integer.valueOf(stringPageSize);
+		}
+		if(sortBy == null) {
+			sortBy = "productId";
+		}
+		
+
+		return productRepository.findAll(PageRequest.of(pageIndex, pageSize, Sort.by(sortBy)));
 	}
 	
 	@GetMapping("/products/{productId}")
