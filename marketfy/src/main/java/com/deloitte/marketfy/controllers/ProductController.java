@@ -63,7 +63,6 @@ public class ProductController {
 		if(sortBy == null) {
 			sortBy = "productId";
 		}
-		
 
 		return productRepository.findAll(PageRequest.of(pageIndex, pageSize, Sort.by(sortBy)));
 	}

@@ -1,6 +1,7 @@
 package com.deloitte.marketfy.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,25 @@ public class UserController {
 	public Optional<User> getUserByEmail(@PathVariable("email") String email) {		
 		Optional<User> user = userRepository.findByEmail(email);
 		return user;
+	}
+	
+	@PostMapping("/users/login")
+	public Optional<User> validateLogin(@RequestBody Map<String, String> userLoginData){
+		
+		String email = userLoginData.get("email");
+		String password = userLoginData.get("password");
+
+		
+		if(email != null && password != null) {
+			Optional<User> userInDB = userRepository.findByEmail(email);
+			
+			if(userInDB.isPresent()) {				
+				if(userInDB.get().getPassword().equals(password)) {
+					return userInDB;
+				}
+			}
+		}
+		return null;
 	}
 	
 	/////////////////////////////////---END 'GET' OPERATIONS---/////////////////////////////////
