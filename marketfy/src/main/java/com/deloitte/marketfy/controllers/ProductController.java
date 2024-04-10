@@ -1,5 +1,6 @@
 package com.deloitte.marketfy.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -65,6 +66,21 @@ public class ProductController {
 		}
 
 		return productRepository.findAll(PageRequest.of(pageIndex, pageSize, Sort.by(sortBy)));
+	}
+	
+	@PostMapping("/products/wishlist")
+	public List<Product> getProductsInWishlist(@RequestBody Map<String, String[]> queryParameters){
+		String[] productIds = queryParameters.get("productIds");
+		List<Product> result = new ArrayList<Product>();
+		
+		for(int i = 0; i < productIds.length; i++) {
+			Optional<Product> product = getProductById(Integer.parseInt(productIds[i]));
+			if(product.isPresent()) {
+				result.add(product.get());
+			}
+		}
+		
+		return result;
 	}
 	
 	@GetMapping("/products/{productId}")

@@ -58,7 +58,6 @@ public class UserController {
 		
 		String email = userLoginData.get("email");
 		String password = userLoginData.get("password");
-
 		
 		if(email != null && password != null) {
 			Optional<User> userInDB = userRepository.findByEmail(email);
@@ -100,31 +99,34 @@ public class UserController {
 		ResponseEntity<String> result = new ResponseEntity<>("USER WITH ID \""+userId+"\" UPDATED", HttpStatus.OK);
 		Optional<User> userInDB = getUserById(userId);
 		boolean isNewEmailAvailable = getUserByEmail(newUser.getEmail()).isEmpty();
+		boolean isTheSameEmail = newUser.getEmail().equalsIgnoreCase(userInDB.get().getEmail());
 		
 		if(userInDB.isEmpty()) {
 			return new ResponseEntity<String>("USER WITH ID \""+userId+"\" NOT FOUND", HttpStatus.NOT_FOUND);
 		
-		} else if(!isNewEmailAvailable) {
+		} else if(!isNewEmailAvailable && !isTheSameEmail) {
 			return new ResponseEntity<String>("EMAIL \""+newUser.getEmail()+"\" ALREADY REGISTERED", HttpStatus.CONFLICT);
-
-		} else {
+			
+		}
+		 else {			
 			userInDB.ifPresent(user -> {
-				if(newUser.getFirstName() != null) {
+								
+				if(newUser.getFirstName() != null && !(newUser.getFirstName().equals(user.getFirstName()))) {
 					user.setFirstName(newUser.getFirstName());
 				}
-				if(newUser.getLastName() != null) {
+				if(newUser.getLastName() != null && !(newUser.getLastName().equals(user.getLastName()))) {
 					user.setLastName(newUser.getLastName());
 				}
-				if(newUser.getBio() != null) {
+				if(newUser.getBio() != null && !(newUser.getBio().equals(user.getBio()))) {
 					user.setBio(newUser.getBio());
 				}
 				if(newUser.getEmail() != null) {
 					user.setEmail(newUser.getEmail());
 				}
-				if(newUser.getPassword() != null) {
+				if(newUser.getPassword() != null && !(newUser.getPassword().equals(user.getPassword()))) {
 					user.setPassword(newUser.getPassword());
 				}
-				if(newUser.getAreasOfInterest() != null) {
+				if(newUser.getAreasOfInterest() != null && !(newUser.getAreasOfInterest().equals(user.getAreasOfInterest()))) {
 					user.setAreasOfInterest(newUser.getAreasOfInterest());	
 				}
 			
