@@ -32,6 +32,12 @@ public class OrderRecord {
 	
 	@Column(name = "product_quantity", nullable = false)
 	private int productQuantity;
+	
+	@Column(name = "product_title", nullable = false, length = 100)
+	private String productTitle;
+	
+	@Column(name = "product_image")
+	private String productImage;
 
 	public int getId() {
 		return id;
@@ -87,6 +93,22 @@ public class OrderRecord {
 
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
+	}
+
+	public String getProductTitle() {
+		return productTitle;
+	}
+
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 
 }
